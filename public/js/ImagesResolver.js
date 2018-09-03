@@ -12,7 +12,7 @@ window.ImagesResolver = (function () {
     search(query, searchModuleId) {
       return new Promise( (resolve, reject) => {
         if ( !this.validSearchModules.includes(searchModuleId) ) {
-          reject('You should provide valid Search Module');
+          reject(new Error('You should provide valid Search Module'));
         }
         let images;
 

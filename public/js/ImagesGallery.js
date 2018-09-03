@@ -19,7 +19,7 @@ window.ImageGallery = (function () {
             this._onReceiveSearchResult(searchResults);
           })
           .catch(err => {
-            throw new Error(err)
+            throw new Error(err.message)
           })
     }
 
