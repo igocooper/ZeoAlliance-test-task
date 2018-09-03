@@ -6,6 +6,7 @@ window.ImageGallery = (function () {
      */
     constructor(imagesResolver) {
       this.imagesResolver = imagesResolver;
+      this.allowedSearchModules = ['local','pixabay'];
       this._initView();
       this._initViewFunctionality();
     }
@@ -14,13 +15,16 @@ window.ImageGallery = (function () {
      * @param {String} query
      */
     search(query, searchModuleId) {
-        this.imagesResolver.search(query, searchModuleId)
-          .then(searchResults => {
-            this._onReceiveSearchResult(searchResults);
-          })
-          .catch(err => {
-            throw new Error(err.message)
-          })
+      if ( !this.allowedSearchModules.includes(searchModuleId) ) {
+        throw new Error('You should provide valid Search Module');
+      }
+      this.imagesResolver.search(query, searchModuleId)
+        .then(searchResults => {
+          this._onReceiveSearchResult(searchResults);
+        })
+        .catch(err => {
+          throw new Error(err.message)
+        })
     }
 
     addToElement(element) {
@@ -62,7 +66,7 @@ window.ImageGallery = (function () {
      
       this.selectSearchModule = document.createElement("select");
       // populate search modules options
-      this.selectSearchModule.innerHTML = this.imagesResolver.validSearchModules
+      this.selectSearchModule.innerHTML = this.allowedSearchModules
         .map(searchModule => {
           return `<option>${searchModule}</option>`
         })

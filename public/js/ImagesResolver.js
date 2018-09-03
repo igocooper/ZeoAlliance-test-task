@@ -2,18 +2,12 @@ window.ImagesResolver = (function () {
   class ImagesResolver {
      /**
      * @constructor
-     * @param {validSearchModules} List<String>
      */
-    constructor(validSearchModules = []) {
-      this.defaultSearchModules = ['local','pixabay'];
-      this.validSearchModules = [...this.defaultSearchModules, ...validSearchModules];
+    constructor() {
     }
 
     search(query, searchModuleId) {
       return new Promise( (resolve, reject) => {
-        if ( !this.validSearchModules.includes(searchModuleId) ) {
-          reject(new Error('You should provide valid Search Module'));
-        }
         let images;
 
         switch(searchModuleId) {
